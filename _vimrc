@@ -50,7 +50,6 @@ autocmd InsertLeave * redraw!
 " highlight current word, don't jump and don't add to jump list 
 nnoremap * *``
 
-
 set nospell             " annoying for code, usefull for other things
 set encoding=utf-8      " Set default encoding to UTF-8
 set guifont=Courier_new " show Cyrillic! 
