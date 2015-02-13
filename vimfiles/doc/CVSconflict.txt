@@ -1,0 +1,81 @@
+*CVSconflict.txt*	Cvs Conflict Visualizer		Sep 27, 2011
+
+Author:  Charles E. Campbell  <drNchipO@ScampbellPfamilyA.bizM>
+	  (remove NOSPAM from Campbell's email to use)
+Copyright: (c) 2005-2008 by Charles E. Campbell		*CVSconflict-copyright*
+
+==============================================================================
+1. Contents						*CVSconflict-contents*
+
+	1. Contents.........................: |CVSconflict-contents|
+	2. CVSconflict Manual...............: |CVSconflict-man|
+	3. CVSconflict History..............: |CVSconflict-history|
+
+==============================================================================
+2. CVSconflict						*CVSconflict-man*
+
+When one uses cvs to update local files, cvs will report that: >
+  U 	The file was updated without trouble.
+  P 	The file was updated without trouble (you will see this only when
+         working with a remote repository).
+  M 	The file has been modified by another, but was merged without conflicts.
+  C 	The file has been modified by another, but was merged with conflicts.
+The CVSconflict plugin works with the last type, conflict files.  Cvs will
+insert sections such as >
+
+  <<<<<<<
+  ...local version...
+  =======
+  ...repository version...
+  >>>>>>>
+<						*CVSconflict* *:CVSconflict*
+into your file when it couldn't decide what to do.  With such files, >
+
+  :CVSconflict
+
+will open two vertically split windows and use vim's vimdiff engine to display
+two variants of the file (the leftside will be the "local version" and the
+right side will be the "repository version").  The two windows' buffers will
+be named fileLocal.c and fileRepo.c, given the original name of file.c:
+>
+  +------------+-----------+
+  |fileLocal.c | fileRepo.c|
+  +------------+-----------+
+<
+Neither of these buffers have actually been written; when you're done
+modifying them (using |dp|, |do| |]c|, etc), pick one to save.  Please
+remember that neither of the two buffers have exactly the same name as the
+original file (ie. the one with conflicts) when you do your saving.
+
+							*CVS-W*
+After you have used vim's editing command and difference commands (see |do|,
+|dp|, and |jumpto-diffs|), you'll likely want to save the file.  One may
+choose the current buffer to save to the original filename ("file.c") by
+using: >
+
+	:W
+<							*CVSwL* *:CVSwR*
+Alternatively, one may explicitly choose a window to use to save to the file
+with one of the following two commands: >
+
+	:CVSwL       writes buffer fileLocal (fileLocal.c) to file.c
+	:CVSwR       writes buffer fileRepo  (fileRepo.c)  to file.c
+<
+
+==============================================================================
+3. CVSconflict History					*CVSconflict-history*
+
+	v2	Apr 19, 2006	: included Plugin.CVS.Conflict into the menu
+		Apr 08, 2008	: included :CVSwA and :CVSwB commands.
+				  Menu item was missing <cr> to get its command
+				  to execute -- fixed.
+		May 23, 2011	: inserted keepj before 0d to protect jump list
+		Sep 27, 2011	: changed buffer names to fileLocal and fileRepo
+				: included :W as buffer commands
+				: changed :CVSwA to :CVSwL (for local or left)
+				: changed :CVSwB to :CVSwR (for repository or right)
+		Nov 19, 2013	: included |:W| command
+	v1	Sep 28, 2005	: Initial version
+
+vim:tw=78:ts=8:ft=help
+
